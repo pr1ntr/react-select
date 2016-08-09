@@ -135,7 +135,7 @@ var Contributors = _react2['default'].createClass({
 				{ className: 'section-heading' },
 				this.props.label
 			),
-			_react2['default'].createElement(_reactSelect2['default'].Async, { multi: this.state.multi, value: this.state.value, onChange: this.onChange, onValueClick: this.gotoContributor, valueKey: 'github', labelKey: 'name', loadOptions: this.getContributors }),
+			_react2['default'].createElement(_reactSelect2['default'].Async, { multi: this.state.multi, value: this.state.value, onChange: this.onChange, valueKey: 'github', labelKey: 'name', loadOptions: this.getContributors }),
 			_react2['default'].createElement(
 				'div',
 				{ className: 'checkbox-list' },
@@ -394,6 +394,8 @@ module.exports = DisabledUpsellOptions;
 },{"react":undefined,"react-select":undefined}],5:[function(require,module,exports){
 'use strict';
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _react = require('react');
@@ -439,7 +441,13 @@ var GithubUsers = _react2['default'].createClass({
 		return (0, _isomorphicFetch2['default'])('https://api.github.com/search/users?q=' + input).then(function (response) {
 			return response.json();
 		}).then(function (json) {
-			return { options: json.items };
+			if (json.items) {
+				return { options: json.items.map(function (item) {
+						return _extends({}, item, { href: item.html_url });
+					}) };
+			} else {
+				return { options: [] };
+			}
 		});
 	},
 	gotoUser: function gotoUser(value, event) {
@@ -454,7 +462,7 @@ var GithubUsers = _react2['default'].createClass({
 				{ className: 'section-heading' },
 				this.props.label
 			),
-			_react2['default'].createElement(_reactSelect2['default'].Async, { multi: this.state.multi, value: this.state.value, onChange: this.onChange, onValueClick: this.gotoUser, valueKey: 'id', labelKey: 'login', loadOptions: this.getUsers, minimumInput: 1, backspaceRemoves: false }),
+			_react2['default'].createElement(_reactSelect2['default'].Async, { multi: this.state.multi, value: this.state.value, onChange: this.onChange, valueKey: 'id', labelKey: 'login', loadOptions: this.getUsers, minimumInput: 1, backspaceRemoves: false }),
 			_react2['default'].createElement(
 				'div',
 				{ className: 'checkbox-list' },
@@ -921,7 +929,7 @@ exports.CITIES = [{ name: 'Abilene' }, { name: 'Addison' }, { name: 'Akron' }, {
 },{}],11:[function(require,module,exports){
 'use strict';
 
-module.exports = [{ github: 'jedwatson', name: 'Jed Watson' }, { github: 'bruderstein', name: 'Dave Brotherstone' }, { github: 'jossmac', name: 'Joss Mackison' }, { github: 'jniechcial', name: 'Jakub Niechciał' }, { github: 'craigdallimore', name: 'Craig Dallimore' }, { github: 'julen', name: 'Julen Ruiz Aizpuru' }, { github: 'dcousens', name: 'Daniel Cousens' }, { github: 'jgautsch', name: 'Jon Gautsch' }, { github: 'dmitry-smirnov', name: 'Dmitry Smirnov' }];
+module.exports = [{ github: 'jedwatson', name: 'Jed Watson', href: 'https://github.com/jedwatson' }, { github: 'bruderstein', name: 'Dave Brotherstone', href: 'https://github.com/bruderstein' }, { github: 'jossmac', name: 'Joss Mackison', href: 'https://github.com/jossmac' }, { github: 'jniechcial', name: 'Jakub Niechciał', href: 'https://github.com/jniechcial' }, { github: 'craigdallimore', name: 'Craig Dallimore', href: 'https://github.com/craigdallimore' }, { github: 'julen', name: 'Julen Ruiz Aizpuru', href: 'https://github.com/julen' }, { github: 'dcousens', name: 'Daniel Cousens', href: 'https://github.com/dcousens' }, { github: 'jgautsch', name: 'Jon Gautsch', href: 'https://github.com/jgautsch' }, { github: 'dmitry-smirnov', name: 'Dmitry Smirnov', href: 'https://github.com/dmitry-smirnov' }];
 
 },{}],12:[function(require,module,exports){
 'use strict';
